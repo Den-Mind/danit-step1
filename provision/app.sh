@@ -16,18 +16,19 @@ fi
 
 echo ">>> Cloning repo Spring PetClinic..."
 if [ ! -d "${PROJECT_DIR}" ]; then
-    sudo -u "${APP_USER}" git clone https://github.com/spring-projects/spring-petclinic.git "${PROJECT_DIR}"
+    sudo -u "${APP_USER}" git clone https://github.com/Den-Mind/danit-step1.git "${PROJECT_DIR}"
 else
     cd "${PROJECT_DIR}"
     sudo -u "${APP_USER}" git pull
 fi
 
 echo ">>> Building app with Maven Wrapper (testing and packaging)..."
-cd "${PROJECT_DIR}"
+cd "${PROJECT_DIR}/PetClinic"
+sudo -u "${APP_USER}" chmod +x mvnw
 sudo -u "${APP_USER}" ./mvnw clean package -DskipTests
 
 echo ">>> Search and coping JAR-file..."
-JAR_FILE=$(find "${PROJECT_DIR}/target" -name "spring-petclinic-*.jar" | head -n 1)
+JAR_FILE=$(find "${PROJECT_DIR}/PetClinic/target" -name "spring-petclinic-*.jar" | head -n 1)
 if [ -z "$JAR_FILE" ]; then
     echo "Error: JAR-file not found!"
     exit 1
